@@ -1,3 +1,21 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  HOW TO ADD YOUR OWN CONTENT
+//
+//  VIDEOS:   Put .mp4 files in the  videos/  folder
+//            Use:  video: "videos/mirage-window-smoke.mp4"
+//
+//  IMAGES:   Put .jpg/.png files in the  images/  folder
+//            Use:  screenshots: ["images/mirage-window-1.jpg", "images/mirage-window-2.jpg"]
+//
+//  MAP IMG:  Put top-down map images in  images/maps/  folder
+//            Use:  mapImage: "images/maps/mirage.jpg"
+//            Then set mapMarker with x/y as % from top-left of that image
+//            Use:  mapMarker: { x: 48, y: 62 }   ← tweak until the dot looks right
+//
+//  YOUTUBE:  If you prefer YouTube instead of local video:
+//            Use:  youtube: "https://www.youtube.com/embed/VIDEO_ID"
+// ─────────────────────────────────────────────────────────────────────────────
+
 const CS2_DATA = {
   maps: [
     { id: "mirage",  name: "Mirage",  thumbnail: "🏜️" },
@@ -9,162 +27,228 @@ const CS2_DATA = {
   categories: ["All", "Smoke", "Flash", "Molotov", "Guide"],
 
   lineups: [
-    // ─── MIRAGE ───
+
+    // ── EXAMPLE with LOCAL video + local screenshots + map marker ──────────
+    // This is how a real entry looks once you add your own files.
+    // Replace the placeholder paths with your actual files.
     {
-      id: 1, map: "mirage", type: "Smoke", title: "Window smoke",
-      description: "Stand in T spawn corner, aim at the top edge of the building. Jump-throw gives a consistent window smoke every time. Very important for A-site executes.",
+      id: 1,
+      map: "mirage",
+      type: "Smoke",
+      title: "Window smoke",
+      description: "Stand in T spawn corner, aim at the top edge of the building.\nJump-throw gives a consistent window smoke every time.\n\n**How to throw:** Hold W + jump, release mouse1 at peak.\n**Result:** Smokes window completely, safe for A execute.",
       from: "T Spawn",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      // ↓ Local video (put file in videos/ folder)
+      video: "videos/mirage-window-smoke.mp4",
+      // ↓ Local screenshots (put files in images/ folder)
       screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Window+Smoke+Lineup",
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Window+Smoke+Result"
+        "images/mirage-window-lineup.jpg",
+        "images/mirage-window-result.jpg"
       ],
+      // ↓ Top-down map image + marker position (% from top-left)
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 52, y: 38 },
       tags: ["T Spawn", "A Site", "Essential"]
     },
+
     {
-      id: 2, map: "mirage", type: "Smoke", title: "Jungle smoke",
-      description: "From T ramp, aim at the corner of the wall and do a running throw. Smokes off jungle allowing a safe A execute without flash support.",
+      id: 2,
+      map: "mirage",
+      type: "Smoke",
+      title: "Jungle smoke",
+      description: "From T ramp, aim at the corner of the wall and do a running throw.\nSmokes off jungle allowing a safe A execute without flash support.",
       from: "T Ramp",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      video: "videos/mirage-jungle-smoke.mp4",
       screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Jungle+Smoke+Lineup"
+        "images/mirage-jungle-lineup.jpg"
       ],
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 44, y: 30 },
       tags: ["T Ramp", "A Site"]
     },
+
     {
-      id: 3, map: "mirage", type: "Smoke", title: "CT smoke",
-      description: "From cat catwalk, look at the edge of the ramp wall and stationary throw. Covers CT position on A site completely.",
+      id: 3,
+      map: "mirage",
+      type: "Smoke",
+      title: "CT smoke",
+      description: "From cat catwalk, look at the edge of the ramp wall and stationary throw.\nCovers CT position on A site completely.",
       from: "Catwalk",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=CT+Smoke+Lineup"
-      ],
+      video: "videos/mirage-ct-smoke.mp4",
+      screenshots: ["images/mirage-ct-lineup.jpg"],
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 62, y: 28 },
       tags: ["Catwalk", "A Site"]
     },
+
     {
-      id: 4, map: "mirage", type: "Flash", title: "Pop flash A ramp",
-      description: "Cook the flash for 1 second, throw over the wall from short stairs. Blinds anyone holding A ramp or short. Coordinate with teammates pushing simultaneously.",
+      id: 4,
+      map: "mirage",
+      type: "Flash",
+      title: "Pop flash A ramp",
+      description: "Cook the flash for 1 second, throw over the wall from short stairs.\nBlinds anyone holding A ramp or short.",
       from: "Short Stairs",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Pop+Flash+Lineup"
-      ],
+      video: "videos/mirage-ramp-flash.mp4",
+      screenshots: ["images/mirage-ramp-flash.jpg"],
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 58, y: 42 },
       tags: ["Short", "A Site"]
     },
+
     {
-      id: 5, map: "mirage", type: "Molotov", title: "B van molotov",
-      description: "From T mid, lob the molotov to clear van position on B site. Forces CT to reposition and clears the most common hiding spot.",
+      id: 5,
+      map: "mirage",
+      type: "Molotov",
+      title: "B van molotov",
+      description: "From T mid, lob the molotov to clear van position on B site.\nForces CT to reposition and clears the most common hiding spot.",
       from: "T Mid",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Van+Molotov"
-      ],
+      video: "videos/mirage-van-molotov.mp4",
+      screenshots: ["images/mirage-van-molotov.jpg"],
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 36, y: 55 },
       tags: ["T Mid", "B Site"]
     },
+
     {
-      id: 6, map: "mirage", type: "Guide", title: "Mid control guide",
-      description: "Controlling mid on Mirage is one of the most important aspects of the map. Window control gives information and access to both sites. This guide covers when to take mid, how to use smokes, and how to rotate.\n\n**Step 1:** Smoke window early to deny CT info.\n**Step 2:** Send one player to cat with flash support.\n**Step 3:** Use mid control to execute B or split A.",
+      id: 6,
+      map: "mirage",
+      type: "Guide",
+      title: "Mid control guide",
+      description: "Controlling mid on Mirage is one of the most important aspects of the map.\n\n**Step 1:** Smoke window early to deny CT info.\n**Step 2:** Send one player to cat with flash support.\n**Step 3:** Use mid control to execute B or split A.",
       from: "Mid",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/1a1a2e/e0e0e0?text=Mid+Control+Overview"
-      ],
+      video: "videos/mirage-mid-guide.mp4",
+      screenshots: ["images/mirage-mid-overview.jpg"],
+      mapImage: "images/maps/mirage.jpg",
+      mapMarker: { x: 50, y: 50 },
       tags: ["Mid", "Strategy", "T-Side"]
     },
 
-    // ─── DUST 2 ───
+    // ── DUST 2 ────────────────────────────────────────────────────────────
     {
-      id: 7, map: "dust2", type: "Smoke", title: "Cross smoke",
-      description: "The most important smoke on Dust 2. From T spawn, aim at the corner of the building and jump-throw. Covers long cross allowing safe passage to long A.",
+      id: 7,
+      map: "dust2",
+      type: "Smoke",
+      title: "Cross smoke",
+      description: "The most important smoke on Dust 2.\nFrom T spawn, aim at the corner of the building and jump-throw.\nCovers long cross allowing safe passage to long A.",
       from: "T Spawn",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/16213e/e0e0e0?text=Cross+Smoke+Lineup"
-      ],
+      video: "videos/dust2-cross-smoke.mp4",
+      screenshots: ["images/dust2-cross-lineup.jpg"],
+      mapImage: "images/maps/dust2.jpg",
+      mapMarker: { x: 28, y: 35 },
       tags: ["T Spawn", "Long A", "Essential"]
     },
+
     {
-      id: 8, map: "dust2", type: "Smoke", title: "B door smoke",
-      description: "From tunnels entrance, throw at the skybox to smoke off CT door. Allows safe entry to B site without getting picked through the door.",
+      id: 8,
+      map: "dust2",
+      type: "Smoke",
+      title: "B door smoke",
+      description: "From tunnels entrance, throw at the skybox to smoke off CT door.\nAllows safe entry to B site without getting picked through the door.",
       from: "Tunnels",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/16213e/e0e0e0?text=B+Door+Smoke"
-      ],
+      video: "videos/dust2-b-door-smoke.mp4",
+      screenshots: ["images/dust2-b-door-lineup.jpg"],
+      mapImage: "images/maps/dust2.jpg",
+      mapMarker: { x: 66, y: 72 },
       tags: ["Tunnels", "B Site"]
     },
+
     {
-      id: 9, map: "dust2", type: "Flash", title: "Long A pop flash",
-      description: "From pit, cook for 2 seconds and throw over the wall. Blinds anyone in A site and car. Perfect for pushing after cross smoke.",
+      id: 9,
+      map: "dust2",
+      type: "Flash",
+      title: "Long A pop flash",
+      description: "From pit, cook for 2 seconds and throw over the wall.\nBlinds anyone in A site and car. Perfect for pushing after cross smoke.",
       from: "Long Pit",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/16213e/e0e0e0?text=Long+Pop+Flash"
-      ],
+      video: "videos/dust2-long-flash.mp4",
+      screenshots: ["images/dust2-long-flash.jpg"],
+      mapImage: "images/maps/dust2.jpg",
+      mapMarker: { x: 22, y: 28 },
       tags: ["Long A", "A Site"]
     },
 
-    // ─── INFERNO ───
+    // ── INFERNO ───────────────────────────────────────────────────────────
     {
-      id: 10, map: "inferno", type: "Smoke", title: "Balcony smoke",
-      description: "From T spawn banana start, run-throw toward the building corner. Smokes off balcony allowing free banana walk. Essential for B-site takes.",
+      id: 10,
+      map: "inferno",
+      type: "Smoke",
+      title: "Balcony smoke",
+      description: "From T spawn banana start, run-throw toward the building corner.\nSmokes off balcony allowing free banana walk. Essential for B-site takes.",
       from: "Banana Start",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/2d1200/e0e0e0?text=Balcony+Smoke+Lineup"
-      ],
+      video: "videos/inferno-balcony-smoke.mp4",
+      screenshots: ["images/inferno-balcony-lineup.jpg"],
+      mapImage: "images/maps/inferno.jpg",
+      mapMarker: { x: 30, y: 65 },
       tags: ["Banana", "B Site", "Essential"]
     },
+
     {
-      id: 11, map: "inferno", type: "Smoke", title: "CT smoke apps",
-      description: "From T apps entrance, aim at the top of the arch and jump-throw. Smokes CT position on A site. Combine with arch smoke for a full A execute.",
+      id: 11,
+      map: "inferno",
+      type: "Smoke",
+      title: "CT smoke apps",
+      description: "From T apps entrance, aim at the top of the arch and jump-throw.\nSmokes CT position on A site. Combine with arch smoke for full A execute.",
       from: "Apps",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/2d1200/e0e0e0?text=CT+Apps+Smoke"
-      ],
+      video: "videos/inferno-ct-smoke.mp4",
+      screenshots: ["images/inferno-ct-lineup.jpg"],
+      mapImage: "images/maps/inferno.jpg",
+      mapMarker: { x: 68, y: 40 },
       tags: ["Apps", "A Site"]
     },
+
     {
-      id: 12, map: "inferno", type: "Molotov", title: "B car molotov",
-      description: "From CT side, lob molotov to cover car on B. Denies the common aggressive position and forces T's back. Great for retake situations.",
+      id: 12,
+      map: "inferno",
+      type: "Molotov",
+      title: "B car molotov",
+      description: "From CT side, lob molotov to cover car on B.\nDenies the common aggressive position and forces T's back.",
       from: "CT Spawn",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/2d1200/e0e0e0?text=Car+Molotov"
-      ],
+      video: "videos/inferno-car-molotov.mp4",
+      screenshots: ["images/inferno-car-molotov.jpg"],
+      mapImage: "images/maps/inferno.jpg",
+      mapMarker: { x: 55, y: 70 },
       tags: ["CT Side", "B Site", "Retake"]
     },
 
-    // ─── ANUBIS ───
+    // ── ANUBIS ────────────────────────────────────────────────────────────
     {
-      id: 13, map: "anubis", type: "Smoke", title: "Bridge smoke",
-      description: "Critical smoke for A site takes. From T mid, aim at the pillar corner and jump-throw. Cuts off rotation from bridge.",
+      id: 13,
+      map: "anubis",
+      type: "Smoke",
+      title: "Bridge smoke",
+      description: "Critical smoke for A site takes. From T mid, aim at the pillar corner and jump-throw.\nCuts off rotation from bridge.",
       from: "T Mid",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/0d2137/e0e0e0?text=Bridge+Smoke"
-      ],
+      video: "videos/anubis-bridge-smoke.mp4",
+      screenshots: ["images/anubis-bridge-lineup.jpg"],
+      mapImage: "images/maps/anubis.jpg",
+      mapMarker: { x: 55, y: 42 },
       tags: ["Mid", "A Site", "Essential"]
     },
+
     {
-      id: 14, map: "anubis", type: "Smoke", title: "Canal smoke",
-      description: "From B main, throw at the arch above canal. Smokes off the water channel allowing safe passage without being spotted from CT.",
+      id: 14,
+      map: "anubis",
+      type: "Smoke",
+      title: "Canal smoke",
+      description: "From B main, throw at the arch above canal.\nSmokes off the water channel allowing safe passage without being spotted from CT.",
       from: "B Main",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/0d2137/e0e0e0?text=Canal+Smoke"
-      ],
+      video: "videos/anubis-canal-smoke.mp4",
+      screenshots: ["images/anubis-canal-lineup.jpg"],
+      mapImage: "images/maps/anubis.jpg",
+      mapMarker: { x: 35, y: 60 },
       tags: ["B Main", "B Site"]
     },
+
     {
-      id: 15, map: "anubis", type: "Guide", title: "A site execute guide",
-      description: "Anubis A site is unique due to the elevated platform and multiple entry points. A proper execute requires coordinated smokes and flashes.\n\n**Required smokes:** Bridge, CT, Connector.\n**Flash role:** One player throws pop flash from mid before entry.\n**Entry:** Two players push column side, one pushes platform.",
+      id: 15,
+      map: "anubis",
+      type: "Guide",
+      title: "A site execute guide",
+      description: "Anubis A site requires coordinated smokes and flashes.\n\n**Required smokes:** Bridge, CT, Connector.\n**Flash role:** One player throws pop flash from mid before entry.\n**Entry:** Two players push column side, one pushes platform.",
       from: "Multiple",
-      youtube: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      screenshots: [
-        "https://placehold.co/600x340/0d2137/e0e0e0?text=A+Site+Execute"
-      ],
+      video: "videos/anubis-a-execute.mp4",
+      screenshots: ["images/anubis-a-execute.jpg"],
+      mapImage: "images/maps/anubis.jpg",
+      mapMarker: { x: 62, y: 35 },
       tags: ["A Site", "Strategy", "Execute"]
     }
   ]
