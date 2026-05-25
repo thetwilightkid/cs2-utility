@@ -18,10 +18,10 @@
 
 const CS2_DATA = {
   maps: [
-    { id: "mirage",  name: "Mirage",  thumbnail: "🏜️", icon: "images/icons/mirage.png",  radar: "images/maps/mirage.jpg" },
-    { id: "dust2",   name: "Dust 2",  thumbnail: "🌅", icon: "images/icons/dust2.png",   radar: "images/maps/dust2.jpg" },
-    { id: "inferno", name: "Inferno", thumbnail: "🔥", icon: "images/icons/inferno.png", radar: "images/maps/inferno.jpg" },
-    { id: "anubis",  name: "Anubis",  thumbnail: "🏛️", icon: "images/icons/anubis.png",  radar: "images/maps/anubis.jpg" }
+    { id: "mirage",  name: "Mirage",  thumbnail: "🏜️", icon: "images/icons/de_mirage.png",  radar: "images/maps/de_mirage_radar_psg.jpg" },
+    { id: "dust2",   name: "Dust 2",  thumbnail: "🌅", icon: "images/icons/de_dust2.png",   radar: "images/maps/de_dust2_radar_psg.jpg" },
+    { id: "inferno", name: "Inferno", thumbnail: "🔥", icon: "images/icons/de_inferno.png", radar: "images/maps/de_inferno_radar_psg.jpg" },
+    { id: "anubis",  name: "Anubis",  thumbnail: "🏛️", icon: "images/icons/de_anubis.png",  radar: "images/maps/de_anubis_radar_psg.jpg" }
   ],
 
   categories: ["All", "Smoke", "Flash", "Molotov", "Guide"],
