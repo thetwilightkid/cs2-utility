@@ -735,3 +735,13 @@ img { max-width: 100%; display: block; }
   z-index: 1;
   color: rgba(255,255,255,0.7);
 }
+
+.meta-map-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 2px;
+  display: inline;
+}

@@ -35,20 +35,19 @@ const CS2_DATA = {
       id: 1,
       map: "mirage",
       type: "Smoke",
-      title: "Window smoke",
-      description: "Stand in T spawn corner, aim at the top edge of the building.\nJump-throw gives a consistent window smoke every time.\n\n**How to throw:** Hold W + jump, release mouse1 at peak.\n**Result:** Smokes window completely, safe for A execute.",
+      title: "Window Smoke 1",
+      description: "Встать в правый угол ступенек на спавне и нацелиться на второй узор.\nСмок работает всегда, однако его могут заблокировать\n\n**Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
       from: "T Spawn",
       // ↓ Local video (put file in videos/ folder)
-      video: "videos/mirage-window-smoke.mp4",
+      video: "videos/mirage/mirage_window_smoke_1.mp4",
       // ↓ Local screenshots (put files in images/ folder)
       screenshots: [
-        "images/mirage-window-lineup.jpg",
-        "images/mirage-window-result.jpg"
+        "images/screenshots/mirage/mirage_window_smoke_1.png",
       ],
       // ↓ Top-down map image + marker position (% from top-left)
       mapImage: "images/maps/mirage.jpg",
-      mapMarker: { x: 52, y: 38 },
-      tags: ["T Spawn", "A Site", "Essential"]
+      mapMarker: { x: 91, y: 35 },
+      tags: ["T Spawn", "Window Smoke", "Essential"]
     },
 
     {

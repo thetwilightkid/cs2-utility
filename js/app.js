@@ -357,7 +357,7 @@ function renderLineupRow(l) {
     <div class="lineup-info">
       <div class="lineup-name">${l.title}</div>
       <div class="lineup-meta">
-        ${state.view === 'home' ? `<span class="meta-map">${map.thumbnail} ${map.name} ·</span> ` : ''}${l.from}
+        ${state.view === 'home' ? `<span class="meta-map">${map.icon ? `<img class="meta-map-icon" src="${map.icon}" />` : map.thumbnail} ${map.name} ·</span> ` : ''}${l.from}
       </div>
     </div>
     <div class="lineup-actions">
