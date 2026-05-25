@@ -18,10 +18,10 @@
 
 const CS2_DATA = {
   maps: [
-    { id: "mirage",  name: "Mirage",  thumbnail: "🏜️", icon: "images/icons/de_mirage.png",  radar: "images/maps/de_mirage_radar_psg.jpg" },
-    { id: "dust2",   name: "Dust 2",  thumbnail: "🌅", icon: "images/icons/de_dust2.png",   radar: "images/maps/de_dust2_radar_psg.jpg" },
-    { id: "inferno", name: "Inferno", thumbnail: "🔥", icon: "images/icons/de_inferno.png", radar: "images/maps/de_inferno_radar_psg.jpg" },
-    { id: "anubis",  name: "Anubis",  thumbnail: "🏛️", icon: "images/icons/de_anubis.png",  radar: "images/maps/de_anubis_radar_psg.jpg" }
+    { id: "mirage",  name: "Mirage",  thumbnail: "🏜️", icon: "images/icons/de_mirage.png",  radar: "images/maps/de_mirage_radar_psd.png",   thumb: "images/thumbs/mirage.png"   },
+    { id: "dust2",   name: "Dust 2",  thumbnail: "🌅", icon: "images/icons/de_dust2.png",   radar: "images/maps/de_dust2_radar_psd.png",    thumb: "images/thumbs/dust2.png"    },
+    { id: "inferno", name: "Inferno", thumbnail: "🔥", icon: "images/icons/de_inferno.png", radar: "images/maps/de_inferno_radar_psd.png",  thumb: "images/thumbs/inferno.png"  },
+    { id: "anubis",  name: "Anubis",  thumbnail: "🏛️", icon: "images/icons/de_anubis.png",  radar: "images/maps/de_anubis_radar_psd.png",   thumb: "images/thumbs/anubis.png"   }
   ],
 
   categories: ["All", "Smoke", "Flash", "Molotov", "Guide"],

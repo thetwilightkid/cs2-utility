@@ -105,10 +105,12 @@ function renderHome() {
 function renderMapsSection() {
   const mapCards = CS2_DATA.maps.map(m => {
     const count = CS2_DATA.lineups.filter(l => l.map === m.id).length;
+    const thumbStyle = m.thumb ? `style="background-image:url('${m.thumb}')"` : '';
     const iconHtml = m.icon
       ? `<img class="map-card-icon" src="${m.icon}" alt="${m.name}" />`
       : `<span class="map-card-emoji">${m.thumbnail}</span>`;
-    return `<div class="map-card" data-action="openMap" data-map="${m.id}">
+    return `<div class="map-card ${m.thumb ? 'map-card-has-thumb' : ''}" data-action="openMap" data-map="${m.id}" ${thumbStyle}>
+      <div class="map-card-overlay"></div>
       ${iconHtml}
       <div class="map-card-name">${m.name}</div>
       <div class="map-card-count">${count} items</div>
