@@ -11,18 +11,12 @@ let state = {
 };
 
 function setState(patch) {
-  const screenshotOnlyChange =
+  const screenshotOnly =
     state.view === 'detail' &&
     Object.keys(patch).length === 1 &&
     'screenshotIndex' in patch;
-
   Object.assign(state, patch);
-
-  if (screenshotOnlyChange) {
-    updateScreenshotOnly();
-  } else {
-    render();
-  }
+  screenshotOnly ? updateScreenshotOnly() : render();
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
@@ -54,26 +48,24 @@ function typeColor(type) {
 function typeIcon(type) {
   return { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
 }
+function typeLabel(type) {
+  return { Smoke: 'SMK', Flash: 'FLH', Molotov: 'MLV', Guide: 'GDE' }[type] || type;
+}
 
-// ── Partial screenshot update (video untouched) ────────────────────────────
+// ── Partial screenshot update ──────────────────────────────────────────────
 function updateScreenshotOnly() {
   const l = getLineup(state.lineupId);
   const shots = l.screenshots || [];
   const idx = state.screenshotIndex;
-
   const img = document.querySelector('.shot-img');
   if (img) img.src = shots[idx];
-
   const label = document.querySelector('.shot-count-label');
   if (label) label.textContent = `(${idx + 1}/${shots.length})`;
-
   const prev = document.querySelector('.shot-prev');
   const next = document.querySelector('.shot-next');
   if (prev) prev.disabled = idx === 0;
   if (next) next.disabled = idx === shots.length - 1;
-
   document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-
   bindShotButtons();
 }
 
@@ -87,7 +79,7 @@ function bindShotButtons() {
 // ── Render ─────────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById('app');
-  if (state.view === 'home')   app.innerHTML = renderHome();
+  if (state.view === 'home')        app.innerHTML = renderHome();
   else if (state.view === 'map')    app.innerHTML = renderMap();
   else if (state.view === 'detail') app.innerHTML = renderDetail();
   bindEvents();
@@ -113,8 +105,11 @@ function renderHome() {
 function renderMapsSection() {
   const mapCards = CS2_DATA.maps.map(m => {
     const count = CS2_DATA.lineups.filter(l => l.map === m.id).length;
+    const iconHtml = m.icon
+      ? `<img class="map-card-icon" src="${m.icon}" alt="${m.name}" />`
+      : `<span class="map-card-emoji">${m.thumbnail}</span>`;
     return `<div class="map-card" data-action="openMap" data-map="${m.id}">
-      <div class="map-emoji">${m.thumbnail}</div>
+      ${iconHtml}
       <div class="map-card-name">${m.name}</div>
       <div class="map-card-count">${count} items</div>
     </div>`;
@@ -136,29 +131,78 @@ function renderMapsSection() {
 
 function renderSavedSection() {
   const savedLineups = CS2_DATA.lineups.filter(l => state.saved.includes(l.id));
-  if (!savedLineups.length) return `<div class="empty-state"><i class="ti ti-star"></i><p>No saved lineups yet</p><span>Tap the star on any lineup to save it here</span></div>`;
+  if (!savedLineups.length) return `<div class="empty-state"><i class="ti ti-star"></i><p>No saved lineups yet</p><span>Tap ☆ on any lineup to save it here</span></div>`;
+
+  // Group saved lineups by map and render radar with all saved markers
+  const byMap = {};
+  savedLineups.forEach(l => {
+    if (!byMap[l.map]) byMap[l.map] = [];
+    byMap[l.map].push(l);
+  });
+
+  const sections = Object.entries(byMap).map(([mapId, lineups]) => {
+    const map = getMapData(mapId);
+    const radarHtml = map.radar ? renderRadarWithMarkers(map, lineups) : '';
+    const rows = lineups.map(l => renderLineupRow(l)).join('');
+    return `
+      <div class="saved-map-section">
+        <div class="section-label saved-map-label">
+          ${map.icon ? `<img class="label-icon" src="${map.icon}" />` : map.thumbnail}
+          ${map.name}
+        </div>
+        ${radarHtml}
+        <div class="lineup-rows">${rows}</div>
+      </div>
+      <div class="divider"></div>`;
+  }).join('');
+
+  return `<div class="section" style="padding-bottom:0">
+    <div class="section-label">Saved (${savedLineups.length})</div>
+  </div>${sections}`;
+}
+
+// ── Radar with markers ─────────────────────────────────────────────────────
+function renderRadarWithMarkers(map, lineups) {
+  const markers = lineups
+    .filter(l => l.mapMarker)
+    .map(l => `
+      <div class="radar-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%"
+           data-action="openLineup" data-id="${l.id}">
+        <div class="radar-marker-icon ${typeColor(l.type)}">
+          <i class="ti ${typeIcon(l.type)}"></i>
+        </div>
+        <div class="radar-marker-label">${l.title}</div>
+      </div>`).join('');
+
   return `
-    <div class="section">
-      <div class="section-label">Saved (${savedLineups.length})</div>
-      <div class="lineup-rows">${savedLineups.map(l => renderLineupRow(l)).join('')}</div>
-    </div>`;
+  <div class="radar-wrap">
+    <img class="radar-img" src="${map.radar}" alt="${map.name} radar" />
+    ${markers}
+  </div>`;
 }
 
 // ── Map view ───────────────────────────────────────────────────────────────
 function renderMap() {
   const map = getMapData(state.mapId);
-  const lineups = getLineups(state.mapId, state.category, state.search);
+  const allLineups = CS2_DATA.lineups.filter(l => l.map === state.mapId);
+  const filtered = getLineups(state.mapId, state.category, state.search);
+
+  // Radar: show markers only for currently filtered lineups
+  const radarHtml = map.radar ? `
+    <div class="map-radar-header">
+      ${renderRadarWithMarkers(map, filtered)}
+    </div>` : '';
 
   const catPills = CS2_DATA.categories.map(c => {
     const count = c === 'All'
-      ? CS2_DATA.lineups.filter(l => l.map === state.mapId).length
-      : CS2_DATA.lineups.filter(l => l.map === state.mapId && l.type === c).length;
+      ? allLineups.length
+      : allLineups.filter(l => l.type === c).length;
     if (count === 0 && c !== 'All') return '';
     return `<button class="cat-pill ${state.category === c ? 'active' : ''}" data-action="setCategory" data-cat="${c}">${c} <span class="cat-count">${count}</span></button>`;
   }).join('');
 
-  const rows = lineups.length
-    ? lineups.map(l => renderLineupRow(l)).join('')
+  const rows = filtered.length
+    ? filtered.map(l => renderLineupRow(l)).join('')
     : `<div class="empty-state"><i class="ti ti-search"></i><p>No results</p></div>`;
 
   return `
@@ -166,17 +210,21 @@ function renderMap() {
     <div class="topbar">
       <button class="back-btn" data-action="goHome"><i class="ti ti-arrow-left"></i></button>
       <div class="topbar-title">
-        <span class="map-emoji-sm">${map.thumbnail}</span>
+        ${map.icon ? `<img class="topbar-map-icon" src="${map.icon}" alt="${map.name}" />` : `<span class="map-emoji-sm">${map.thumbnail}</span>`}
         <span>${map.name}</span>
       </div>
       <div style="width:36px"></div>
     </div>
+
+    ${radarHtml}
+
     <div class="search-wrap">
       <i class="ti ti-search search-icon"></i>
       <input class="search-input" type="text" placeholder="Search lineups…" value="${state.search}" data-action="search" />
     </div>
     <div class="cat-scroll">${catPills}</div>
     <div class="divider"></div>
+
     <div class="content-scroll">
       <div class="lineup-rows">${rows}</div>
     </div>
@@ -187,6 +235,7 @@ function renderMap() {
 // ── Detail view ────────────────────────────────────────────────────────────
 function renderDetail() {
   const l = getLineup(state.lineupId);
+  const map = getMapData(l.map);
   const saved = isSaved(l.id);
   const shots = l.screenshots || [];
   const idx = state.screenshotIndex;
@@ -203,7 +252,23 @@ function renderDetail() {
 
   const tags = (l.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('');
 
-  // Video block: local file wins over YouTube
+  // Single-marker radar for this specific lineup
+  const singleRadarHtml = (map.radar && l.mapMarker) ? `
+    <div class="detail-radar-section">
+      <div class="video-label"><i class="ti ti-map-2"></i> Map position</div>
+      <div class="radar-wrap radar-single">
+        <img class="radar-img" src="${map.radar}" alt="${map.name} radar" />
+        <div class="radar-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%">
+          <div class="radar-marker-icon ${typeColor(l.type)}">
+            <i class="ti ${typeIcon(l.type)}"></i>
+          </div>
+          <div class="radar-marker-label">${l.title}</div>
+          <div class="marker-pulse-ring"></div>
+        </div>
+      </div>
+    </div>` : '';
+
+  // Video
   let videoHtml = '';
   if (l.video) {
     videoHtml = `
@@ -228,19 +293,6 @@ function renderDetail() {
     </div>`;
   }
 
-  // Map overview with marker dot
-  const mapOverviewHtml = l.mapImage ? `
-    <div class="map-overview-section">
-      <div class="video-label"><i class="ti ti-map-2"></i> Map position</div>
-      <div class="map-overview-wrap">
-        <img class="map-overview-img" src="${l.mapImage}" alt="Map overview" />
-        ${l.mapMarker ? `<div class="map-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%">
-          <div class="marker-icon ${typeColor(l.type)}"><i class="ti ${typeIcon(l.type)}"></i></div>
-          <div class="marker-pulse"></div>
-        </div>` : ''}
-      </div>
-    </div>` : '';
-
   return `
   <div class="screen-wrap">
     <div class="topbar">
@@ -252,6 +304,8 @@ function renderDetail() {
     </div>
 
     <div class="content-scroll">
+
+      ${singleRadarHtml}
 
       ${videoHtml}
 
@@ -269,8 +323,6 @@ function renderDetail() {
         </div>
         ${dotNav}
       </div>` : ''}
-
-      ${mapOverviewHtml}
 
       <div class="detail-body">
         <div class="detail-header-row">
@@ -316,7 +368,6 @@ function renderLineupRow(l) {
 }
 
 function renderBottomNav() {
-  // Guides tab hidden until content is ready
   const items = [
     { id: 'lineups', icon: 'ti-layout-grid', label: 'Lineups' },
     { id: 'saved',   icon: 'ti-star',        label: 'Saved' }

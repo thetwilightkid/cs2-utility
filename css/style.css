@@ -559,3 +559,131 @@ img { max-width: 100%; display: block; }
   object-fit: contain;
   background: #000;
 }
+
+/* ── Map card icon (replaces emoji) ─────────────────────────────────────── */
+.map-card-icon {
+  width: 48px; height: 48px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+.map-card-emoji { font-size: 28px; margin-bottom: 8px; display: block; }
+
+.topbar-map-icon {
+  width: 22px; height: 22px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.label-icon {
+  width: 16px; height: 16px;
+  object-fit: contain;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* ── Radar ───────────────────────────────────────────────────────────────── */
+.map-radar-header {
+  flex-shrink: 0;
+  padding: 0 0 0 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.radar-wrap {
+  position: relative;
+  width: 100%;
+  background: #0a0e14;
+  overflow: hidden;
+}
+
+.map-radar-header .radar-wrap {
+  max-height: 260px;
+}
+
+.radar-single {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.radar-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  filter: brightness(0.75) saturate(0.8);
+}
+
+.map-radar-header .radar-img {
+  max-height: 260px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── Radar markers ───────────────────────────────────────────────────────── */
+.radar-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.radar-marker-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+.radar-marker-icon i { font-size: 11px; }
+
+.radar-marker-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.8);
+  white-space: nowrap;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  background: rgba(0,0,0,0.45);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.marker-pulse-ring {
+  position: absolute;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  animation: radarPulse 2s ease-out infinite;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes radarPulse {
+  0%   { transform: translate(-50%,-50%) scale(0.5); opacity: 0.7; }
+  100% { transform: translate(-50%,-50%) scale(1.6); opacity: 0; }
+}
+
+/* ── Saved section radar ─────────────────────────────────────────────────── */
+.saved-map-section { padding: 12px 16px 0; }
+.saved-map-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* ── Detail radar ────────────────────────────────────────────────────────── */
+.detail-radar-section { padding: 12px 16px 0; }
