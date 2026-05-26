@@ -237,12 +237,7 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 .map-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,107,53,0.04) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.2s;
+  display: none;
 }
 .map-card:hover { border-color: var(--line2); }
 .map-card:hover::before { opacity: 1; }
@@ -744,8 +739,4 @@ img { max-width: 100%; display: block; }
   vertical-align: middle;
   margin-right: 2px;
   display: inline;
-}
-
-.map-card-has-thumb::before {
-  display: none;
 }
