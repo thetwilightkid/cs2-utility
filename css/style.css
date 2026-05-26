@@ -745,3 +745,7 @@ img { max-width: 100%; display: block; }
   margin-right: 2px;
   display: inline;
 }
+
+.map-card-has-thumb::before {
+  display: none;
+}

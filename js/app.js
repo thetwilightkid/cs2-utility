@@ -1,4 +1,3 @@
-// ── State ──────────────────────────────────────────────────────────────────
 let state = {
   view: 'home',
   mapId: null,
@@ -45,14 +44,20 @@ function isSaved(id) { return state.saved.includes(id); }
 function typeColor(type) {
   return { Smoke: 'tag-smoke', Flash: 'tag-flash', Molotov: 'tag-molotov', Guide: 'tag-guide' }[type] || 'tag-smoke';
 }
-function typeIcon(type) {
-  return { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
-}
-function typeLabel(type) {
-  return { Smoke: 'SMK', Flash: 'FLH', Molotov: 'MLV', Guide: 'GDE' }[type] || type;
+
+// Returns an <img> with the grenade icon, or falls back to a Tabler <i>
+function grenadeIconHtml(type, size) {
+  const icons = CS2_DATA.grenadeIcons || {};
+  const src = icons[type];
+  const px = size || 18;
+  if (src) {
+    return `<img src="${src}" style="width:${px}px;height:${px}px;object-fit:contain;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6))" alt="${type}" />`;
+  }
+  const fallback = { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
+  return `<i class="ti ${fallback}" style="font-size:${px}px"></i>`;
 }
 
-// ── Partial screenshot update ──────────────────────────────────────────────
+// ── Partial screenshot update (no video reload) ────────────────────────────
 function updateScreenshotOnly() {
   const l = getLineup(state.lineupId);
   const shots = l.screenshots || [];
@@ -135,7 +140,6 @@ function renderSavedSection() {
   const savedLineups = CS2_DATA.lineups.filter(l => state.saved.includes(l.id));
   if (!savedLineups.length) return `<div class="empty-state"><i class="ti ti-star"></i><p>No saved lineups yet</p><span>Tap ☆ on any lineup to save it here</span></div>`;
 
-  // Group saved lineups by map and render radar with all saved markers
   const byMap = {};
   savedLineups.forEach(l => {
     if (!byMap[l.map]) byMap[l.map] = [];
@@ -171,7 +175,7 @@ function renderRadarWithMarkers(map, lineups) {
       <div class="radar-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%"
            data-action="openLineup" data-id="${l.id}">
         <div class="radar-marker-icon ${typeColor(l.type)}">
-          <i class="ti ${typeIcon(l.type)}"></i>
+          ${grenadeIconHtml(l.type, 13)}
         </div>
         <div class="radar-marker-label">${l.title}</div>
       </div>`).join('');
@@ -189,7 +193,6 @@ function renderMap() {
   const allLineups = CS2_DATA.lineups.filter(l => l.map === state.mapId);
   const filtered = getLineups(state.mapId, state.category, state.search);
 
-  // Radar: show markers only for currently filtered lineups
   const radarHtml = map.radar ? `
     <div class="map-radar-header">
       ${renderRadarWithMarkers(map, filtered)}
@@ -254,7 +257,7 @@ function renderDetail() {
 
   const tags = (l.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('');
 
-  // Single-marker radar for this specific lineup
+  // Radar with single marker for this lineup
   const singleRadarHtml = (map.radar && l.mapMarker) ? `
     <div class="detail-radar-section">
       <div class="video-label"><i class="ti ti-map-2"></i> Map position</div>
@@ -262,7 +265,7 @@ function renderDetail() {
         <img class="radar-img" src="${map.radar}" alt="${map.name} radar" />
         <div class="radar-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%">
           <div class="radar-marker-icon ${typeColor(l.type)}">
-            <i class="ti ${typeIcon(l.type)}"></i>
+            ${grenadeIconHtml(l.type, 13)}
           </div>
           <div class="radar-marker-label">${l.title}</div>
           <div class="marker-pulse-ring"></div>
@@ -270,7 +273,7 @@ function renderDetail() {
       </div>
     </div>` : '';
 
-  // Video
+  // Video block
   let videoHtml = '';
   if (l.video) {
     videoHtml = `
@@ -294,6 +297,12 @@ function renderDetail() {
       </div>
     </div>`;
   }
+
+  // Type badge — use grenade icon if available
+  const typeBadgeHtml = `
+    <span class="type-tag ${typeColor(l.type)}">
+      ${grenadeIconHtml(l.type, 12)} ${l.type}
+    </span>`;
 
   return `
   <div class="screen-wrap">
@@ -332,9 +341,7 @@ function renderDetail() {
             <h2 class="detail-title">${l.title}</h2>
             <div class="detail-from"><i class="ti ti-map-pin"></i> From: ${l.from}</div>
           </div>
-          <span class="type-tag ${typeColor(l.type)}">
-            <i class="ti ${typeIcon(l.type)}"></i> ${l.type}
-          </span>
+          ${typeBadgeHtml}
         </div>
         <div class="detail-tags">${tags}</div>
         <div class="detail-desc">${descHtml}</div>
@@ -352,7 +359,7 @@ function renderLineupRow(l) {
   return `
   <div class="lineup-row" data-action="openLineup" data-id="${l.id}">
     <div class="lineup-icon ${typeColor(l.type)}">
-      <i class="ti ${typeIcon(l.type)}"></i>
+      ${grenadeIconHtml(l.type, 20)}
     </div>
     <div class="lineup-info">
       <div class="lineup-name">${l.title}</div>
