@@ -53,8 +53,8 @@ function grenadeIconHtml(type, size) {
   if (src) {
     return `<img src="${src}" style="width:${px}px;height:${px}px;object-fit:contain;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6))" alt="${type}" />`;
   }
-  // const fallback = { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
-  //return `<i class="ti ${fallback}" style="font-size:${px}px"></i>`;
+  const fallback = { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
+  return `<i class="ti ${fallback}" style="font-size:${px}px"></i>`;
 }
 
 // ── Partial screenshot update (no video reload) ────────────────────────────
@@ -344,6 +344,7 @@ function renderDetail() {
           ${typeBadgeHtml}
         </div>
         <div class="detail-tags">${tags}</div>
+        ${l.throwType ? `<div class="throw-badge"><i class="ti ti-hand-finger"></i> ${l.throwType}</div>` : ''}
         <div class="detail-desc">${descHtml}</div>
       </div>
     </div>

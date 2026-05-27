@@ -31,7 +31,6 @@ const CS2_DATA = {
       id: 1,
       map: "mirage",
       type: "Smoke",
-      grenadeIcons: Smoke,
       title: "Window Smoke 1",
       description: "Встать в правый угол ступенек на спавне и нацелиться на второй узор.\nСмок работает всегда, однако его могут заблокировать\n\n**Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
       from: "T Spawn",
@@ -39,6 +38,7 @@ const CS2_DATA = {
       screenshots: [
         "images/screenshots/mirage/mirage_window_smoke_1.png"
       ],
+      throwType: "ЛКМ + Прыжок",
       mapMarker: { x: 91, y: 35 },
       tags: ["T Spawn", "Window Smoke", "Essential"]
     },

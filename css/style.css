@@ -237,7 +237,12 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 .map-card::before {
-  display: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,107,53,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 .map-card:hover { border-color: var(--line2); }
 .map-card:hover::before { opacity: 1; }
@@ -731,12 +736,23 @@ img { max-width: 100%; display: block; }
   color: rgba(255,255,255,0.7);
 }
 
-.meta-map-icon {
-  width: 14px;
-  height: 14px;
-  object-fit: contain;
-  border-radius: 2px;
-  vertical-align: middle;
-  margin-right: 2px;
-  display: inline;
+/* ── Throw type badge ────────────────────────────────────────────────────── */
+.throw-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 107, 53, 0.12);
+  border: 1px solid rgba(255, 107, 53, 0.4);
+  color: var(--accent2);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  box-shadow: 0 0 12px rgba(255, 107, 53, 0.15);
+}
+.throw-badge i {
+  font-size: 15px;
+  color: var(--accent);
 }
