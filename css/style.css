@@ -235,6 +235,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.15s;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 .map-card:hover { border-color: var(--line2); }
 .map-card:active { transform: scale(0.97); }
@@ -692,17 +693,20 @@ img { max-width: 100%; display: block; }
 .map-card-has-thumb {
   background-size: cover;
   background-position: center;
+  background-clip: padding-box;
   min-height: 130px;
   justify-content: flex-end;
   padding-bottom: 12px;
+  border: none !important;
 }
 
 .map-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
-  border-radius: inherit;
+  border-radius: var(--radius);
   pointer-events: none;
+  z-index: 0;
 }
 
 .map-card {
