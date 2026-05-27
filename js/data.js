@@ -21,6 +21,7 @@ const CS2_DATA = {
     Smoke:   "images/grenade_icons/smoke.png",
     Flash:   "images/grenade_icons/flash.png",
     Molotov: "images/grenade_icons/molotov.png",
+    HE:      "images/grenade_icons/he.png",
     Guide:   null
   },
 
@@ -38,7 +39,6 @@ const CS2_DATA = {
       screenshots: [
         "images/screenshots/mirage/mirage_window_smoke_1.png"
       ],
-      throwType: "ЛКМ + Прыжок",
       throwType: "ЛКМ + Прыжок",
       mapMarker: { x: 91, y: 35 },
       tags: ["T Spawn", "Window Smoke", "Essential"]
