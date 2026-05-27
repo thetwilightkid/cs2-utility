@@ -51,7 +51,7 @@ function grenadeIconHtml(type, size) {
   const src = icons[type];
   const px = size || 18;
   if (src) {
-    return `<img src="${src}" style="width:${px}px;height:${px}px;object-fit:contain;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.6))" alt="${type}" />`;
+    return `<img src="${src}" style="width:${px}px;height:${px}px;object-fit:contain;display:block;" alt="${type}" />`;
   }
   const fallback = { Smoke: 'ti-cloud', Flash: 'ti-bolt', Molotov: 'ti-flame', Guide: 'ti-book' }[type] || 'ti-circle';
   return `<i class="ti ${fallback}" style="font-size:${px}px"></i>`;
@@ -175,7 +175,7 @@ function renderRadarWithMarkers(map, lineups) {
       <div class="radar-marker" style="left:${l.mapMarker.x}%;top:${l.mapMarker.y}%"
            data-action="openLineup" data-id="${l.id}">
         <div class="radar-marker-icon ${typeColor(l.type)}">
-          ${grenadeIconHtml(l.type, 13)}
+          ${grenadeIconHtml(l.type, 16)}
         </div>
         <div class="radar-marker-label">${l.title}</div>
       </div>`).join('');
@@ -190,7 +190,7 @@ function renderRadarWithMarkers(map, lineups) {
 // ── Map view ───────────────────────────────────────────────────────────────
 function renderMap() {
   const map = getMapData(state.mapId);
-  if (!map) { setState({ view: 'home' }); return ''; }
+  if (!map) { state.view = 'home'; render(); return; }
   const allLineups = CS2_DATA.lineups.filter(l => l.map === state.mapId);
   const filtered = getLineups(state.mapId, state.category, state.search);
 
@@ -361,7 +361,7 @@ function renderLineupRow(l) {
   return `
   <div class="lineup-row" data-action="openLineup" data-id="${l.id}">
     <div class="lineup-icon ${typeColor(l.type)}">
-      ${grenadeIconHtml(l.type, 20)}
+      ${grenadeIconHtml(l.type, 30)}
     </div>
     <div class="lineup-info">
       <div class="lineup-name">${l.title}</div>
