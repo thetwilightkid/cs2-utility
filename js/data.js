@@ -33,7 +33,7 @@ const CS2_DATA = {
       map: "mirage",
       type: "Smoke",
       title: "Window Smoke 1",
-      description: "Встать в правый угол ступенек на спавне и нацелиться на второй узор.\nСмок работает всегда, однако его могут заблокировать\n\n**Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
+      description: "Встать в правый угол ступенек на спавне и нацелиться на второй узор.\nСмок работает всегда, но его могут заблокировать телом\n\n**Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
       from: "T Spawn",
       video: "videos/mirage/mirage_window_smoke_1.mp4",
       screenshots: [
@@ -48,26 +48,28 @@ const CS2_DATA = {
       id: 2,
       map: "mirage",
       type: "Smoke",
-      title: "Jungle smoke",
-      description: "From T ramp, aim at the corner of the wall and do a running throw.\nSmokes off jungle allowing a safe A execute without flash support.",
-      from: "T Ramp",
-      video: "videos/mirage/jungle-smoke.mp4",
-      screenshots: ["images/screenshots/mirage/jungle-smoke.jpg"],
-      mapMarker: { x: 44, y: 30 },
-      tags: ["T Ramp", "A Site"]
+      title: "Short Smoke 1",
+      throwType: "ЛКМ + Прыжок",
+      description: "Встать в правый угол ступенек на спавне нацелиться на деревянный квадрат\nСмок работает всегда. Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
+      from: "T Spawn",
+      video: "videos/mirage/mirage_short_smoke_1.mp4",
+      screenshots: ["images/screenshots/mirage/mirage_short_smoke_1.png"],
+      mapMarker: { x: 91, y: 35 },
+      tags: ["T Spawn", "Short Smoke", "Essential"]
     },
 
     {
       id: 3,
       map: "mirage",
       type: "Smoke",
-      title: "CT smoke",
-      description: "From cat catwalk, look at the edge of the ramp wall and stationary throw.\nCovers CT position on A site completely.",
-      from: "Catwalk",
-      video: "videos/mirage/ct-smoke.mp4",
-      screenshots: ["images/screenshots/mirage/ct-smoke.jpg"],
-      mapMarker: { x: 62, y: 28 },
-      tags: ["Catwalk", "A Site"]
+      title: "Con smoke",
+      throwType: "ЛКМ + Прыжок",
+      description: "Встать в правый угол ступенек на спавне, присесть (CTRL), нацелиться на угол рамки, встать и кинуть.\nСмок работает всегда. Чтобы кинуть нужно зажать ЛКМ и прыгнуть, выпустить вместе с прыжком.",
+      from: "T Spawn",
+      video: "videos/mirage/mirage_con_smoke_1.mp4",
+      screenshots: ["images/screenshots/mirage/mirage_con_smoke_1.png"],
+      mapMarker: { x: 91, y: 35 },
+      tags: ["T Spawn", "Con Smoke", "Essential"]
     },
 
     {
