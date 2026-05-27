@@ -190,7 +190,10 @@ function renderRadarWithMarkers(map, lineups) {
 // ── Map view ───────────────────────────────────────────────────────────────
 function renderMap() {
   const map = getMapData(state.mapId);
-  if (!map) { state.view = 'home'; render(); return; }
+  if (!map) {
+    // mapId lost - return to home safely without recursion
+    return renderHome();
+  }
   const allLineups = CS2_DATA.lineups.filter(l => l.map === state.mapId);
   const filtered = getLineups(state.mapId, state.category, state.search);
 
@@ -408,7 +411,7 @@ function handleAction(e) {
   if      (action === 'openMap')     setState({ view: 'map', mapId: el.dataset.map, category: 'All', search: '' });
   else if (action === 'openLineup')  setState({ view: 'detail', lineupId: parseInt(el.dataset.id), screenshotIndex: 0 });
   else if (action === 'goHome')      setState({ view: 'home' });
-  else if (action === 'goMap')       setState({ view: 'map' });
+  else if (action === 'goMap')       setState({ view: 'map', mapId: state.mapId });
   else if (action === 'setCategory') setState({ category: el.dataset.cat });
   else if (action === 'toggleSave')  { e.stopPropagation(); toggleSaved(parseInt(el.dataset.id)); }
   else if (action === 'setShot')     setState({ screenshotIndex: parseInt(el.dataset.i) });
