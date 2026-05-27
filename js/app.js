@@ -190,6 +190,7 @@ function renderRadarWithMarkers(map, lineups) {
 // ── Map view ───────────────────────────────────────────────────────────────
 function renderMap() {
   const map = getMapData(state.mapId);
+  if (!map) { setState({ view: 'home' }); return ''; }
   const allLineups = CS2_DATA.lineups.filter(l => l.map === state.mapId);
   const filtered = getLineups(state.mapId, state.category, state.search);
 
@@ -365,7 +366,7 @@ function renderLineupRow(l) {
     <div class="lineup-info">
       <div class="lineup-name">${l.title}</div>
       <div class="lineup-meta">
-        ${state.view === 'home' ? `<span class="meta-map">${map.icon ? `<img class="meta-map-icon" src="${map.icon}" />` : map.thumbnail} ${map.name} ·</span> ` : ''}${l.from}
+        ${state.view === 'home' ? `<span class="meta-map">${map.icon ? `<img class="meta-map-icon" src="${map.icon}" style="width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:middle;margin-right:2px" />` : map.thumbnail} ${map.name} ·</span> ` : ''}${l.from}
       </div>
     </div>
     <div class="lineup-actions">

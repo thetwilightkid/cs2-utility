@@ -39,6 +39,7 @@ const CS2_DATA = {
         "images/screenshots/mirage/mirage_window_smoke_1.png"
       ],
       throwType: "ЛКМ + Прыжок",
+      throwType: "ЛКМ + Прыжок",
       mapMarker: { x: 91, y: 35 },
       tags: ["T Spawn", "Window Smoke", "Essential"]
     },

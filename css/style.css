@@ -594,29 +594,31 @@ img { max-width: 100%; display: block; }
   position: relative;
   width: 100%;
   background: #0a0e14;
-  overflow: hidden;
+  /* no overflow:hidden — let full image show */
 }
 
 .map-radar-header .radar-wrap {
-  max-height: 260px;
+  /* full image, no cropping */
 }
 
 .radar-single {
   border-radius: var(--radius);
   border: 1px solid var(--line);
+  overflow: hidden;
 }
 
 .radar-img {
   width: 100%;
+  height: auto;       /* natural height, no cropping */
   display: block;
-  object-fit: cover;
-  filter: brightness(0.75) saturate(0.8);
+  object-fit: contain;
+  filter: brightness(0.8) saturate(0.85);
 }
 
 .map-radar-header .radar-img {
-  max-height: 260px;
-  object-fit: cover;
-  object-position: center;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ── Radar markers ───────────────────────────────────────────────────────── */
